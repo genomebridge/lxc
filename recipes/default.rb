@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 
-dpkg_autostart 'lxc' do
-  allow false
-end
+case node["platform"]
+when "ubuntu"
+ dpkg_autostart 'lxc' do
+   allow false
+ end
 
-dpkg_autostart 'lxc-net' do
-  allow false
+ dpkg_autostart 'lxc-net' do
+   allow false
+ end
+when "debian"
+ dpkg_autostart 'lxc' do
+   allow false
+ end
 end
 
 # Start at 0 and increment up if found
@@ -81,15 +88,22 @@ node[:lxc][:packages].each do |lxcpkg|
 end
 
 # this just reloads the dnsmasq rules when the template is adjusted
-service 'lxc-net' do
-  action [:enable, :start]
-  subscribes :restart, resources("template[/etc/default/lxc]")
-end
+case node["platform"]
+when "ubuntu"
+ service 'lxc-net' do
+   action [:enable, :start]
+   subscribes :restart, resources("template[/etc/default/lxc]")
+ end
 
-service 'lxc' do
-  action [:enable, :start]
+ service 'lxc' do
+   action [:enable, :start]
+ end
+when "debian"
+ service 'lxc' do
+   action [:enable, :start]
+   subscribes :restart, resources("template[/etc/default/lxc]")
+ end
 end
-
 chef_gem 'elecksee' do
   if(node[:lxc][:elecksee][:version_restriction])
     version node[:lxc][:elecksee][:version_restriction]
