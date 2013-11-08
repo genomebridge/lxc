@@ -13,6 +13,8 @@ when "debian"
  dpkg_autostart 'lxc' do
    allow false
  end
+ package "libvirt-bin" 
+ package "dnsmasq-base"
 end
 
 # Start at 0 and increment up if found
