@@ -1,3 +1,16 @@
+## v1.1.8
+* Bug fix release: Upgrades `elecksee` gem to 1.0.20 minimum (#45)
+
+## v1.1.6
+* Fix data bag secret copy (thanks @jbianquetti)
+* Support upstart based services (thanks @bkw)
+* Update minimum version for `elecksee` helper gem
+
+## v1.1.4
+* Use latest omnibus deb for chef install within containers
+* Apt cacher related fixes
+* Handful of bug fixes
+
 ## v1.1.2
 * Update lxc package installation to accept existing configuration file
 * Add missing `-n` option in `destroy` action for LWRP (thanks @sanders)
